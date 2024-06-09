@@ -26,36 +26,41 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(8),
-      padding: EdgeInsets.symmetric(vertical: 15,horizontal: 8),
-      width: double.infinity,
-      height: 175,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5),
-          color: Theme.of(context).colorScheme.onSecondaryContainer),
-      child: Column(
+    return LayoutBuilder(
+      builder: (ctx,constraint){
+        return  Container(
+          margin: EdgeInsets.all(8),
+          padding: EdgeInsets.symmetric(vertical: 15,horizontal: 8),
+          width: double.infinity,
+          height: constraint.maxHeight,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              color: Theme.of(context).colorScheme.onSecondaryContainer),
+          child: Column(
 
-        children: [
-          Expanded(
-            child: Row(
-              children: [
-                for (final element in buckets)  ChartBar(fill: element.totalExpenses/totalExpense,),
-              ],
-            ),
-          ),
+            children: [
+              Expanded(
+                child: Row(
+                  children: [
+                    for (final element in buckets)  ChartBar(fill: element.totalExpenses/totalExpense,),
+                  ],
+                ),
+              ),
 
-          Row(
-            children: buckets
-                .map((e) => Expanded(
-                        child: Padding(
+              Row(
+                children: buckets
+                    .map((e) => Expanded(
+                    child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal:2,),
                       child: Icon(categoryIcon[e.category]),
                     )))
-                .toList(),
+                    .toList(),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
+
     );
   }
 }
